@@ -1,5 +1,5 @@
 CC ?= gcc
-CFLAGS ?= -Wall -std=gnu99 -g3 -DDEBUG -O0
+CFLAGS_common ?= -Wall -std=gnu99 -g3 -DDEBUG -O0
 
 EXEC = pi matrix
 GIT_HOOKS := .git/hooks/applied
@@ -12,12 +12,12 @@ $(GIT_HOOKS):
 
 SRCS_common = main.c
 
-pi: $(SRCS_common) $@.c
+pi: %:$(SRCS_common) %.c
 	$(CC) $(CFLAGS_common) \
 		-o $@ -DPI -DHEADER="\"$@.h\"" \
 		$(SRCS_common) $@.c
 
-matrix: $(SRCS_common) $@.c
+matrix: %:$(SRCS_common) %.c
 	$(CC) $(CFLAGS_common) \
 		-o $@ -DMATRIX -DHEADER="\"$@.h\"" \
 		$(SRCS_common) $@.c
